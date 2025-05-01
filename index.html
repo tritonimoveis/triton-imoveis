@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triton Imóveis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <header class="bg-blue-800 text-white p-4">
+    <h1 class="text-2xl font-bold text-center">Triton Imóveis</h1>
+  </header>
+
+  <main class="p-4 max-w-6xl mx-auto">
+    <section class="bg-white p-4 rounded shadow mb-6">
+      <h2 class="text-xl font-semibold mb-4">Buscar Imóveis</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <select id="cidade" class="p-2 border rounded">
+          <option value="">Cidade</option>
+          <option value="São Paulo">São Paulo</option>
+          <option value="Campinas">Campinas</option>
+        </select>
+
+        <select id="bairro" class="p-2 border rounded">
+          <option value="">Bairro</option>
+          <option value="Centro">Centro</option>
+          <option value="Jardins">Jardins</option>
+        </select>
+
+        <select id="tipo" class="p-2 border rounded">
+          <option value="">Tipo de Imóvel</option>
+          <option value="Casa">Casa</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Terreno">Terreno</option>
+          <option value="Prédio">Prédio</option>
+          <option value="Sala Comercial">Sala Comercial</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="lista-imoveis" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    </section>
+  </main>
+
+  <script>
+    const imoveis = [
+      {
+        titulo: "Casa ampla com quintal",
+        cidade: "São Paulo",
+        bairro: "Jardins",
+        tipo: "Casa",
+        valor: "R$ 850.000",
+        medidas: "200m², 3 quartos, 2 banheiros, 2 vagas",
+        descricao: "Casa bem localizada, com área verde e ótima estrutura.",
+        imagem: "https://via.placeholder.com/300x200"
+      },
+      {
+        titulo: "Apartamento moderno",
+        cidade: "Campinas",
+        bairro: "Centro",
+        tipo: "Apartamento",
+        valor: "R$ 500.000",
+        medidas: "80m², 2 quartos, 2 banheiros, 1 vaga",
+        descricao: "Apartamento em prédio novo, com varanda e lazer completo.",
+        imagem: "https://via.placeholder.com/300x200"
+      }
+    ];
+
+    function renderImoveis(filtroCidade = '', filtroBairro = '', filtroTipo = '') {
+      const container = document.getElementById("lista-imoveis");
+      container.innerHTML = "";
+
+      const filtrados = imoveis.filter(imovel => {
+        return (!filtroCidade || imovel.cidade === filtroCidade) &&
+               (!filtroBairro || imovel.bairro === filtroBairro) &&
+               (!filtroTipo || imovel.tipo === filtroTipo);
+      });
+
+      filtrados.forEach(imovel => {
+        const card = document.createElement("div");
+        card.className = "bg-white rounded shadow p-4";
+        card.innerHTML = `
+          <img src="${imovel.imagem}" alt="${imovel.titulo}" class="w-full h-40 object-cover rounded mb-2">
+          <h3 class="text-lg font-bold">${imovel.titulo}</h3>
+          <p class="text-gray-600">${imovel.cidade} - ${imovel.bairro}</p>
+          <p class="text-blue-700 font-semibold">${imovel.valor}</p>
+          <p class="text-sm">${imovel.medidas}</p>
+          <p class="text-sm mt-2">${imovel.descricao}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById("cidade").addEventListener("change", () => {
+      renderImoveis(
+        cidade.value,
+        bairro.value,
+        tipo.value
+      );
+    });
+    document.getElementById("bairro").addEventListener("change", () => {
+      renderImoveis(
+        cidade.value,
+        bairro.value,
+        tipo.value
+      );
+    });
+    document.getElementById("tipo").addEventListener("change", () => {
+      renderImoveis(
+        cidade.value,
+        bairro.value,
+        tipo.value
+      );
+    });
+
+    renderImoveis();
+  </script>
+</body>
+</html>
